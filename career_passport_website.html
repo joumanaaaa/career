@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6a203d">
+<title>The Future Is Yours — Career Passport</title>
+<style>
+:root{
+  --wine:#6a203d;--wine-dark:#481429;--rose:#f2dce4;--blush:#fbf0f3;
+  --cream:#fffaf5;--ink:#34232a;--muted:#796b70;--gold:#c69a60;
+  --line:#ead8df;--white:#fff;--shadow:0 18px 50px rgba(87,31,54,.11);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at 10% 0%,#f7e5eb 0,transparent 32%),linear-gradient(135deg,#fffaf6,#fbf0f3);color:var(--ink);font-family:Inter,"Segoe UI",Arial,sans-serif;min-height:100vh}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.site-header{max-width:1080px;margin:auto;padding:24px 22px 8px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:11px;color:var(--wine);font-weight:800;letter-spacing:.08em;font-size:.82rem}
+.brand-mark{width:42px;height:42px;border:1px solid #d7b4c1;border-radius:50%;display:grid;place-items:center;background:#fff9fb;font-size:21px}
+.header-note{font-size:.78rem;color:var(--muted)}
+main{max-width:850px;margin:0 auto;padding:18px 20px 60px}
+.panel{background:rgba(255,255,255,.88);border:1px solid rgba(234,216,223,.9);border-radius:26px;box-shadow:var(--shadow);overflow:hidden}
+.hero{text-align:center;padding:clamp(28px,6vw,58px) clamp(20px,6vw,60px);position:relative}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;font-weight:800;color:var(--wine);margin:0 0 15px}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.45rem,7vw,4.7rem);line-height:1.02;letter-spacing:-.045em;color:var(--wine-dark);margin:0}
+.hero .subtitle{font-family:Georgia,serif;font-style:italic;color:#9b6b7d;font-size:clamp(1.05rem,2.8vw,1.35rem);margin:18px 0}
+.hero p{max-width:570px;line-height:1.7;color:var(--muted);margin:0 auto}
+.stars{color:var(--gold);letter-spacing:.45em;margin:22px 0 18px;font-size:1rem}
+.pills{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:22px 0 28px}
+.pill{font-size:.76rem;border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:#fffafc;color:#704358}
+.btn{border:0;border-radius:999px;padding:14px 23px;font-weight:750;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--wine);color:white;box-shadow:0 7px 18px rgba(106,32,61,.2)}
+.btn-primary:hover{background:var(--wine-dark)}
+.btn-secondary{background:#f7e8ee;color:var(--wine);border:1px solid #e9cbd7}
+.btn-quiet{background:transparent;color:var(--wine);text-decoration:underline;text-underline-offset:4px;padding:10px}
+.small-print{font-size:.78rem;color:var(--muted);line-height:1.6;margin:18px auto 0;max-width:580px}
+.quiz{display:none;padding:clamp(22px,5vw,42px)}
+.quiz-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;color:var(--muted);font-size:.82rem}
+.progress-track{height:7px;background:#f1e3e8;border-radius:99px;overflow:hidden;margin-bottom:27px}
+.progress-fill{height:100%;width:5%;background:linear-gradient(90deg,var(--wine),#bd7892);border-radius:99px;transition:width .25s}
+.question-kicker{color:#a36b80;text-transform:uppercase;font-size:.72rem;font-weight:800;letter-spacing:.15em;margin:0 0 10px}
+h2{font-family:Georgia,serif;color:var(--wine-dark);font-size:clamp(1.55rem,4vw,2.2rem);line-height:1.25;margin:0 0 23px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.answer{display:flex;align-items:flex-start;gap:12px;text-align:left;padding:17px 16px;border:1px solid var(--line);border-radius:16px;background:#fffdfd;color:var(--ink);line-height:1.45;min-height:90px}
+.answer:hover{border-color:#c58da2;background:#fff7fa}
+.answer.selected{border:2px solid var(--wine);background:#fbecf2;padding:16px 15px;box-shadow:0 0 0 3px rgba(106,32,61,.06)}
+.letter{flex:0 0 29px;height:29px;border-radius:50%;display:grid;place-items:center;background:#f4e5eb;color:var(--wine);font-weight:800;font-size:.8rem}
+.answer.selected .letter{background:var(--wine);color:#fff}
+.answer-text{padding-top:3px;font-size:.94rem}
+.nav-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:27px}
+.nav-row .right{display:flex;gap:10px;align-items:center}
+.error{color:#9b2146;font-size:.85rem;min-height:1.3em;margin-top:12px}
+.results{display:none;padding:clamp(22px,5vw,42px)}
+.results-head{text-align:center;padding:15px 0 24px}
+.results-head h2{font-size:clamp(2rem,5vw,3rem);margin-bottom:12px}
+.results-head p{color:var(--muted);line-height:1.65;max-width:590px;margin:auto}
+.result-card{border:1px solid var(--line);border-radius:18px;padding:20px;margin:12px 0;background:#fffdfd}
+.result-card.featured{background:linear-gradient(130deg,#fff4f7,#fffaf6);border-color:#d8afbe}
+.rank{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#9b6b7d;font-weight:800;margin-bottom:8px}
+.result-title{font-family:Georgia,serif;color:var(--wine);font-size:1.55rem;margin:0 0 8px}
+.result-card p{color:var(--muted);line-height:1.65;margin:0}
+.score-line{font-size:.82rem;color:var(--wine);font-weight:750;margin-top:12px}
+.result-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:26px 0 8px}
+.disclaimer{background:#fbf1f4;border-radius:14px;padding:15px 17px;color:#765b66;font-size:.8rem;line-height:1.6;margin-top:20px}
+.footer{text-align:center;color:#9b7c89;font-size:.75rem;padding:20px 0 0}
+.hidden{display:none!important}
+@media(max-width:620px){
+ .site-header{padding:17px 16px 5px}.header-note{display:none}main{padding:13px 12px 38px}
+ .panel{border-radius:21px}.answers{grid-template-columns:1fr}.answer{min-height:72px;padding:14px}
+ .answer.selected{padding:13px}.quiz-top{font-size:.76rem}.nav-row{align-items:stretch}
+ .nav-row .btn{padding:12px 17px}.nav-row .right{gap:7px}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="brand"><div class="brand-mark" aria-hidden="true">✦</div><span>THE FUTURE IS YOURS</span></div>
+  <div class="header-note">A little curiosity can open a new chapter.</div>
+</header>
+<main>
+<section class="panel hero" id="welcome">
+  <div class="eyebrow">Your Career Passport</div>
+  <h1>The Future<br>Is Yours</h1>
+  <div class="subtitle">20 questions. New possibilities.</div>
+  <div class="stars" aria-hidden="true">✧ ✦ ✧</div>
+  <p>Explore the subjects, challenges, and future paths that feel most like you. Answer honestly, follow your curiosity, and discover academic fields you may want to explore.</p>
+  <div class="pills"><span class="pill">20 questions</span><span class="pill">Personalized matches</span><span class="pill">Retake anytime</span></div>
+  <button class="btn btn-primary" id="startBtn">Start your journey&nbsp; →</button>
+  <p class="small-print">There are no right or wrong answers. This quiz is for exploration and self-reflection, not a final decision about your future.</p>
+</section>
+
+<section class="panel quiz" id="quiz" aria-live="polite">
+  <div class="quiz-top"><span id="questionCount">QUESTION 1 OF 20</span><span id="progressPercent">5% complete</span></div>
+  <div class="progress-track" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax="20" aria-valuenow="1" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+  <p class="question-kicker">Choose what feels most like you</p>
+  <h2 id="questionText"></h2>
+  <div class="answers" id="answers"></div>
+  <div class="error" id="errorMessage" role="status"></div>
+  <div class="nav-row">
+    <button class="btn btn-secondary" id="backBtn">← Back</button>
+    <div class="right"><button class="btn btn-quiet" id="exitBtn">Exit</button><button class="btn btn-primary" id="nextBtn">Next →</button></div>
+  </div>
+</section>
+
+<section class="panel results" id="results" aria-live="polite">
+  <div class="results-head">
+    <div class="eyebrow">Your next chapter</div>
+    <h2>Your Career Matches</h2>
+    <p>These fields connect with the choices you made. Think of them as starting points for exploration—not limits on what you can become.</p>
+    <div class="stars" aria-hidden="true">✧ ✦ ✧</div>
+  </div>
+  <div id="resultList"></div>
+  <div class="disclaimer"><strong>A gentle reminder:</strong> This quiz is for fun and self-reflection. It is not a scientifically validated career assessment and cannot guarantee success or determine your future. Your interests can change as you learn and grow.</div>
+  <div class="result-actions">
+    <button class="btn btn-primary" id="retakeBtn">↻ Retake test</button>
+    <button class="btn btn-secondary" id="shareBtn">Share results</button>
+  </div>
+  <p class="small-print" style="text-align:center">Your answers are processed in this page and are not sent to a server by this quiz.</p>
+</section>
+<div class="footer">THE FUTURE IS YOURS · Explore with an open mind ✦</div>
+</main>
+<script>
+const careers = {
+  business:{name:"Business",desc:"Entrepreneurship, strategy, management, markets, and building ventures.",activities:["Sketch a simple business idea and identify who it could help.","Compare two brands and how they attract customers.","Create a basic budget for a small project."]},
+  bis:{name:"Business Informatics",desc:"Connecting business, data, and technology to improve how organizations work.",activities:["Map how an everyday service could be made easier with technology.","Try organizing sample information in a spreadsheet.","Explore how an app helps a business make decisions."]},
+  cs:{name:"Computer Science",desc:"Programming, software, algorithms, artificial intelligence, and creating digital products.",activities:["Try a beginner coding lesson.","Draw the steps an app would follow to solve a problem.","Explore a simple AI demo and ask how it works."]},
+  biotech:{name:"Biotechnology",desc:"Using biology and laboratory science to develop useful products and innovations.",activities:["Explore how vaccines or fermentation work.","Watch an introductory genetics lesson.","Read about a biological discovery and its real-world use."]},
+  bioinfo:{name:"Bioinformatics",desc:"Combining biology, computing, and data analysis to understand complex biological information.",activities:["Explore how scientists use data to study DNA.","Try interpreting a simple chart about a biological topic.","Learn how computing can help research disease."]},
+  medicine:{name:"Medicine",desc:"Diagnosing, treating, and caring for patients using medical science and clinical judgment.",activities:["Explore a beginner anatomy resource.","Learn how doctors gather clues before making a diagnosis.","Speak with a trusted healthcare professional about their work, if possible."]},
+  engineering:{name:"Engineering",desc:"Applying mathematics and science to design, build, and improve systems, machines, or structures.",activities:["Build or sketch a simple prototype.","Explore a beginner robotics or engineering activity.","Find an everyday design and think about how to improve it."]},
+  political:{name:"Political Science",desc:"Studying governments, international relations, public policy, and how power shapes society.",activities:["Compare how two sources report the same world event.","Research how a local policy affects people.","Try a debate or Model United Nations activity."]},
+  law:{name:"Law",desc:"Interpreting laws, analyzing evidence, arguing cases, and protecting rights.",activities:["Read a short case study and identify both sides.","Practice building an argument supported by evidence.","Explore how laws affect an everyday situation."]},
+  dentistry:{name:"Dentistry",desc:"Oral healthcare, diagnosis, precise hands-on procedures, and improving dental health.",activities:["Learn the basics of oral health and prevention.","Explore how dental technology supports treatment.","Find out what a dentist's typical day involves."]}
+};
+
+const questions = [
+ {q:"You're given a completely free Saturday and a mystery challenge. Which invitation would you choose?",a:[
+  ["Create a mini brand and figure out how to make people fall in love with it.","business"],
+  ["Build an app or website that solves an everyday annoyance.","cs"],
+  ["Investigate how a new discovery could change people's health.","biotech"],
+  ["Explore a world problem and develop a plan to influence what happens next.","political"]]},
+ {q:"Your school announces a competition with a huge prize. Which project makes you think, “I NEED to try this”?",a:[
+  ["Launch a small business with a product people would actually buy.","business"],
+  ["Design a smarter digital system that connects people, data and decisions.","bis"],
+  ["Develop a biological innovation that could help solve a real-world problem.","biotech"],
+  ["Invent a machine, structure or device that does something amazing.","engineering"]]},
+ {q:"You're watching a documentary at 1 a.m. Which topic would keep you watching until the end?",a:[
+  ["How doctors solve complicated medical mysteries and save lives.","medicine"],
+  ["How artificial intelligence learns patterns and makes predictions.","cs"],
+  ["How companies, money and markets shape people's everyday lives.","business"],
+  ["How countries negotiate, compete and influence world events.","political"]]},
+ {q:"Your friend says, “I have an idea, but I don't know how to make it happen.” What role do you naturally take?",a:[
+  ["Research the science behind it and whether it could work in living systems.","biotech"],
+  ["Turn the idea into a practical plan, budget and business model.","business"],
+  ["Organize the people, design the process and make the solution work.","bis"],
+  ["Help them build the digital tool or program that brings it to life.","cs"]]},
+ {q:"You can shadow one professional for a week. Which experience sounds most fascinating?",a:[
+  ["A dentist transforming someone's smile and confidence through precise work.","dentistry"],
+  ["A researcher studying DNA, cells and how life works.","biotech"],
+  ["A lawyer building an argument and defending a client's position.","law"],
+  ["A data specialist discovering patterns that help organizations make better decisions.","bis"]]},
+ {q:"You're given a mystery case. Which clue would you be most excited to investigate?",a:[
+  ["A patient's symptoms that need to be connected to find a diagnosis.","medicine"],
+  ["A cyber or software system behaving strangely and hiding a technical flaw.","cs"],
+  ["A scientific sample containing clues about a biological process.","bioinfo"],
+  ["A contract containing inconsistencies that could change the outcome of a case.","law"]]},
+ {q:"Imagine you're designing your dream workplace. What would you most want to spend your day doing?",a:[
+  ["Developing and testing a physical invention until it works perfectly.","engineering"],
+  ["Meeting people, negotiating opportunities and building partnerships.","business"],
+  ["Researching public policy and finding ways to improve society.","political"],
+  ["Running a clinic where detailed, hands-on work helps people directly.","dentistry"]]},
+ {q:"Your school gives you a budget to improve one thing. What would you choose?",a:[
+  ["Create a campaign that makes students care about an important cause.","political"],
+  ["Build a digital platform that makes school services easier to use.","bis"],
+  ["Create a business venture that funds itself and can keep growing.","business"],
+  ["Develop a new approach to a health or biological problem.","biotech"]]},
+ {q:"Which kind of problem feels most satisfying to solve?",a:[
+  ["Figuring out why a computer program fails and making it work.","cs"],
+  ["Finding the strongest evidence to prove whether a claim is true.","law"],
+  ["Understanding how the human body works and deciding what care is needed.","medicine"],
+  ["Improving a business's strategy so it grows without wasting resources.","business"]]},
+ {q:"A famous university invites you to join one research lab. Which invitation would you open first?",a:[
+  ["A lab developing medical treatments and investigating disease.","medicine"],
+  ["A lab studying data, algorithms and intelligent computer systems.","cs"],
+  ["A lab designing robots, machines or sustainable infrastructure.","engineering"],
+  ["A lab exploring cells, genetics and biotechnology.","bioinfo"]]},
+ {q:"You have to give a presentation on a topic you choose yourself. Which could you talk about with genuine excitement?",a:[
+  ["How to build a successful brand and turn customers into a community.","business"],
+  ["How AI could change the way people work and live.","cs"],
+  ["How the law protects rights and resolves conflicts.","law"],
+  ["How international decisions shape peace, trade and people's lives.","political"]]},
+ {q:"You discover a problem nobody around you has solved yet. What's your first instinct?",a:[
+  ["Understand the biology behind the problem and test possible solutions.","biotech"],
+  ["Research the market and see whether a new service could solve it.","business"],
+  ["Map the technical requirements and design a system to fix it.","engineering"],
+  ["Interview people, investigate evidence and build a convincing case for change.","law"]]},
+ {q:"Which achievement would make you feel proudest five years from now?",a:[
+  ["Helping a patient recover after a difficult medical journey.","medicine"],
+  ["Launching a product or company that people genuinely love.","business"],
+  ["Designing an engineering solution that makes life safer or easier.","engineering"],
+  ["Creating a useful software product that people rely on.","cs"]]},
+ {q:"Your team is arguing over a big decision. What would you contribute?",a:[
+  ["Analyze the data and explain what the evidence suggests.","bioinfo"],
+  ["Negotiate a fair solution and make sure everyone's rights are considered.","law"],
+  ["Understand the business impact and identify the most valuable opportunity.","bis"],
+  ["Evaluate the scientific evidence behind the options.","biotech"]]},
+ {q:"Which kind of detail could you happily spend hours getting exactly right?",a:[
+  ["The fit, shape and fine details of a dental restoration.","dentistry"],
+  ["The wording of an argument, agreement or legal document.","law"],
+  ["The design and performance of a technical component.","engineering"],
+  ["The accuracy of a biological experiment and its results.","biotech"]]},
+ {q:"You can solve one global challenge. Which would you choose?",a:[
+  ["Improve access to quality healthcare and medical treatment.","medicine"],
+  ["Help governments and communities make fairer, smarter policies.","political"],
+  ["Make business services and digital information work better together.","bis"],
+  ["Create a sustainable business that solves a real need.","business"]]},
+ {q:"Which compliment would mean the most to you?",a:[
+  ["You can make complicated technology understandable and useful.","bis"],
+  ["You notice things in data that everyone else misses.","bioinfo"],
+  ["Your discoveries could make a real difference to human health.","biotech"],
+  ["You can bring people together and turn ideas into action.","business"]]},
+ {q:"You're choosing an extracurricular club. Which would you join first?",a:[
+  ["Debate and diplomacy, discussing world affairs and negotiation.","political"],
+  ["Entrepreneurship, pitching ideas and testing business concepts.","business"],
+  ["Robotics and engineering, building and testing prototypes.","engineering"],
+  ["Health sciences, exploring clinical cases and patient care.","medicine"]]},
+ {q:"Imagine you could invent a tool that would make you famous. What would you want it to do?",a:[
+  ["Help people manage a business, make decisions and use information efficiently.","bis"],
+  ["Detect disease earlier by analyzing biological information.","bioinfo"],
+  ["Give people a more confident smile through innovative dental technology.","dentistry"],
+  ["Use AI to solve a problem people have struggled with for years.","cs"]]},
+ {q:"Final question: Forget salary, prestige and what other people expect. Which future feels most like YOU?",a:[
+  ["Building a company, leading teams and creating opportunities.","business"],
+  ["Creating intelligent technology and exploring what computers can achieve.","cs"],
+  ["Discovering how living systems work and turning research into useful innovations.","biotech"],
+  ["Treating patients, making careful decisions and helping people feel better.","medicine"]]}
+];
+
+let current=0;
+let answers=Array(questions.length).fill(null);
+const $=id=>document.getElementById(id);
+function showOnly(id){["welcome","quiz","results"].forEach(x=>$(x).style.display=x===id?(x==="welcome"?"block":"block"):"none");window.scrollTo({top:0,behavior:"smooth"});}
+function renderQuestion(){
+ const item=questions[current];
+ $("questionCount").textContent=`QUESTION ${current+1} OF ${questions.length}`;
+ $("progressPercent").textContent=`${Math.round((current+1)/questions.length*100)}% complete`;
+ $("progressFill").style.width=`${(current+1)/questions.length*100}%`;
+ $("progressBar").setAttribute("aria-valuenow",current+1);
+ $("questionText").textContent=item.q;
+ $("answers").innerHTML="";
+ item.a.forEach((answer,i)=>{
+  const btn=document.createElement("button");
+  btn.type="button";btn.className="answer"+(answers[current]===i?" selected":"");
+  btn.setAttribute("aria-pressed",answers[current]===i?"true":"false");
+  const letter=document.createElement("span");letter.className="letter";letter.textContent=String.fromCharCode(65+i);
+  const txt=document.createElement("span");txt.className="answer-text";txt.textContent=answer[0];
+  btn.append(letter,txt);btn.addEventListener("click",()=>{answers[current]=i;$("errorMessage").textContent="";renderQuestion();});
+  $("answers").appendChild(btn);
+ });
+ $("backBtn").disabled=current===0;
+ $("backBtn").style.opacity=current===0?".45":"1";
+ $("nextBtn").textContent=current===questions.length-1?"See my results →":"Next →";
+ $("errorMessage").textContent="";
+}
+function start(){showOnly("quiz");renderQuestion();}
+function showResults(){
+ const scores={};Object.keys(careers).forEach(k=>scores[k]=0);
+ answers.forEach((answerIndex,i)=>{if(answerIndex!==null){const key=questions[i].a[answerIndex][1];scores[key]++;}});
+ const ranking=Object.keys(scores).map(key=>({key,...careers[key],score:scores[key]})).sort((a,b)=>b.score-a.score);
+ const topScore=ranking[0].score;
+ const winners=ranking.filter(r=>r.score===topScore);
+ const resultList=$("resultList");resultList.innerHTML="";
+ const ranks=["Strongest match","Another possibility","Worth exploring"];
+ let shown=0;
+ for(let i=0;i<ranking.length&&shown<3;){
+   const score=ranking[i].score;
+   const tied=ranking.slice(i).filter(r=>r.score===score);
+   // Preserve ties in the top three positions rather than presenting a tie as a single winner.
+   for(const item of tied){
+     if(shown>=3)break;
+     const card=document.createElement("article");card.className="result-card"+(shown===0?" featured":"");
+     const rank=document.createElement("div");rank.className="rank";rank.textContent=shown===0&&tied.length>1?"Strongest match — tied":ranks[shown]||"Another possibility";
+     const title=document.createElement("h3");title.className="result-title";title.textContent=item.name;
+     const desc=document.createElement("p");desc.textContent=item.desc;
+     const scoreLine=document.createElement("div");scoreLine.className="score-line";scoreLine.textContent=`${item.score} point${item.score===1?"":"s"} from your answers`;
+     const activityTitle=document.createElement("p");activityTitle.style.cssText="margin-top:13px;font-weight:700;color:#6a203d";activityTitle.textContent="A few ways to explore:";
+     const ul=document.createElement("ul");ul.style.cssText="color:#796b70;line-height:1.6;padding-left:20px;margin-bottom:0";
+     item.activities.forEach(a=>{const li=document.createElement("li");li.textContent=a;ul.appendChild(li)});
+     card.append(rank,title,desc,scoreLine,activityTitle,ul);resultList.appendChild(card);shown++;
+   }
+   i+=tied.length;
+ }
+ if(topScore===0){resultList.innerHTML="<p>No matches yet. Retake the quiz and answer each question to see your results.</p>";}
+ showOnly("results");
+}
+$("startBtn").addEventListener("click",start);
+$("nextBtn").addEventListener("click",()=>{
+ if(answers[current]===null){$("errorMessage").textContent="Choose one answer to continue.";return;}
+ if(current<questions.length-1){current++;renderQuestion();window.scrollTo({top:0,behavior:"smooth"});}else{showResults();}
+});
+$("backBtn").addEventListener("click",()=>{if(current>0){current--;renderQuestion();}});
+$("exitBtn").addEventListener("click",()=>{showOnly("welcome");});
+function retake(){current=0;answers=Array(questions.length).fill(null);showOnly("welcome");}
+$("retakeBtn").addEventListener("click",retake);
+$("shareBtn").addEventListener("click",async()=>{
+ const scores={};Object.keys(careers).forEach(k=>scores[k]=0);
+ answers.forEach((answerIndex,i)=>{if(answerIndex!==null)scores[questions[i].a[answerIndex][1]]++;});
+ const ranking=Object.keys(scores).map(k=>({name:careers[k].name,score:scores[k]})).sort((a,b)=>b.score-a.score);
+ const top=ranking.slice(0,3).map((r,i)=>`${i+1}. ${r.name} (${r.score} points)`).join("\n");
+ const text=`My Career Passport results — The Future Is Yours\n${top}\n\nThis quiz is for fun and self-reflection, not a definitive career assessment.`;
+ try{
+  if(navigator.share){await navigator.share({title:"My Career Passport results",text});}
+  else if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(text);alert("Your results summary has been copied. You can paste it into a message.");}
+  else{window.prompt("Copy your results summary:",text);}
+ }catch(e){if(e.name!=="AbortError")alert("Sharing wasn't available. You can try again or take a screenshot of your results.");}
+});
+</script>
+</body>
+</html>
